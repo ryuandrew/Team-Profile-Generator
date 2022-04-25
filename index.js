@@ -1,14 +1,15 @@
-// takes in info about employees on a SW engineering team, then generates an HTML webpage that displays summaries for each person. 
-// write a unit test for every part of the code and ensure it passes
-// GIVEN a command-line application that accepts user input
-// WHEN I am prompted for my team members and their information
-// THEN an HTML file is generated that displays a nicely formatted team roster based on user input
-// WHEN I click on an email address in the HTML
-// THEN my default email program opens and populates the TO field of the email with the address
-// WHEN I click on the GitHub username
-// THEN that GitHub profile opens in a new tab
-// WHEN I start the application
-// THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
+// start the app
+// create a team
+    // enter manager's name, id, email, officeNumber
+    // add ee
+        // option: engineer
+            // enter name, id, email, github username
+        // option: intern
+            // enter name, id, email, school
+// HTML file is generated
+    // click email address <a href>
+    // click github username <a href>
+
   
 // {
 //   "dependencies": {
@@ -22,74 +23,91 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 const fs = require('fs')  //enable interaction with the file system
-const path = require('./src/generateHtml')  //link to create page
-// const path = require('path')
+const generateHtml = require('./src/generateHtml')  //link to create page
+const { default: generate } = require('@babel/generator')
 
-// start the app
-// create a team
-    // enter manager's name, id, email, officeNumber
-    // add ee
-        // option: engineer
-            // enter name, id, email, github username
-        // option: intern
-            // enter name, id, email, school
-// HTML file is generated
-    // click email address <a href>
-    // click github username <a href>
+
+const team = []
 
 const managerInfo = ()=>{
     inquirer.prompt([
         {
             type: 'input',
             message: "What is the manager's name?",
-            name: "managerName"
+            name: "name"
         },
         {
             type: 'input',
             message: "What is the manager's id?",
-            name: "managerId"
+            name: "id"
         },
         {
             type: 'input',
             message: "What is the manager's email address?",
-            name: "managerEmail"
+            name: "email"
         },
         {
             type: 'input',
             message: "What is the manager's office number?",
-            name: "managerOfficeNumber"
+            name: "officeNumber"
         },
-    ]).then(ans => {
-        console.log(ans)
-
+    ]).then(({name, id, email, officeNumber}) => {
+        const newManager = new Manager (name, id, email, officeNumber) //create a new constructor with new values. 
+        team.push(newManager)
+        createTeam()
     })
 }
  
+
+const createTeam = ()=>{
+    inquirer.prompt([
+        {
+            type:'list',
+            message: "Select a team member",
+            name: 'selectEmployee',
+            choices: ['engineer', 'intern', 'quit']
+        },
+    ]).then((ans) => {
+        switch(ans.selectEmployee) {
+            case 'engineer':
+                engineerInfo()
+                break;
+            case 'intern':
+                internInfo()
+                break;
+            default:
+                fs.writeFileSync('output/index.html', generateHtml(team)) //generateHtml will return a string/data of the html
+        }
+    })
+}
+
 
 const engineerInfo = ()=>{
     inquirer.prompt([
         {
             type: 'input',
             message: "What is the engineer's name?",
-            name: "engineerName"
+            name: "name"
         },
         {
             type: 'input',
             message: "What is the engineer's id?",
-            name: "engineerName"
+            name: "id"
         },
         {
             type: 'input',
             message: "What is the engineer's email?",
-            name: "engineerEmail"
+            name: "email"
         },
         {
             type: 'input',
             message: "What is the engineer's GitHub username?",
-            name: "engineerGithub"
+            name: "github"
         },
-    ]).then(ans => {
-        console.log(ans)
+    ]).then(({name, id, email, github}) => {
+        const newEngineer = new Engineer (name, id, email, github) //create a new constructor with new values. 
+        team.push(newEngineer)
+        createTeam()
     })
 }
 
@@ -99,25 +117,28 @@ const internInfo = ()=>{
         {
             type: 'input',
             message: "What is the intern's name?",
-            name: "internName"
+            name: "name"
         },
         {
             type: 'input',
             message: "What is the intern's id?",
-            name: "internName"
+            name: "id"
         },
         {
             type: 'input',
             message: "What is the intern's email?",
-            name: "internEmail"
+            name: "email"
         },
         {
             type: 'input',
             message: "Which school is the intern attening or graduate from?",
-            name: "internSchool"
+            name: "school"
         },
-    ]).then(ans => {
-        console.log(ans)
+    ]).then(({name, id, email, school}) => {
+        const newIntern = new Intern (name, id, email, school) //create a new constructor with new values. 
+        team.push(newIntern)
+        createTeam()
     })
 }
 
+managerInfo();
