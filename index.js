@@ -10,14 +10,6 @@
     // click email address <a href>
     // click github username <a href>
 
-  
-// {
-//   "dependencies": {
-//     "inquirer": "^8.2.2",
-//     "jest": "^27.5.1"
-//   }
-// }
-
 const inquirer = require('inquirer')
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
@@ -26,8 +18,8 @@ const fs = require('fs')  //enable interaction with the file system
 const generateHtml = require('./src/generateHtml')  //link to create page
 const { default: generate } = require('@babel/generator')
 
-
 const team = []
+
 
 const managerInfo = ()=>{
     inquirer.prompt([

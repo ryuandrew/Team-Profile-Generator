@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#header1 {
+    padding: 30px;
+    background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgb(206, 255, 222));
+}
+
+h1 {
+    text-shadow: 1px 1px 5px white, 0 0 5px gray;
+
+}
+
+.card {
+    margin: 10px;
+    padding: 5px;
+    box-shadow: 5px 5px 10px gray;
+    width: 960px;
+}
+
+.card-header {
+    background-image: linear-gradient(to bottom, rgba(255,0,0,0), rgb(206, 255, 222));
+}
