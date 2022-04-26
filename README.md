@@ -32,7 +32,7 @@ User must install Node.js. To run node, Visual Studio Code with Gitbash/Command 
 ## Usage
 
 ```
-To use the Team Profile generator, run the command 'node.js' in terminal and answer all the questions. After answering the prompts and selecting quit, a new HTML file will be generated under the output folder.
+To use the Team Profile generator, run the command 'node index.js' in terminal and answer all the questions. After answering the prompts and selecting quit, a new HTML file will be generated under the output folder.
 ```
 
 
@@ -77,10 +77,11 @@ WHEN I decide to finish building my team
 
 The video demo of the app can be found here:
 
+https://drive.google.com/file/d/1ydqgAJqULn33nlQjyuR70ByhkthbAFYs/view
 
 ---
 ## Screenshot
-![]()
+![](./output/screenshot.png)
 
 
 ---
